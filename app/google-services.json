@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "1005970495222",
+    "firebase_url": "https://fir-broadcast.firebaseio.com",
+    "project_id": "firebase-broadcast",
+    "storage_bucket": "firebase-broadcast.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1005970495222:android:a54d7eb4e98feab4",
+        "android_client_info": {
+          "package_name": "a9m2broadcast.kamalnrf.broacast"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1005970495222-3drnv4uac3gqeqnqdc9hme5umggd8g7g.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "1005970495222-4f61ueplpgd7h3c6q4dc5if6ra3onasq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDesYuR5oHCgmu9KniOQ_F7SZ0Mq7dFTIM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-78243960-2"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

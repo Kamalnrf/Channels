@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFc400</color><!-- Action bar -->
+    <color name="colorPrimaryDark">#FFA000</color><!-- above Action bar #FFA000 -->
+    <color name="colorAccent">#FFc400</color><!-- rest  #FFc400-->
+    <color name="send_bar">#2A2929</color>
+    <color name="chat_bubble">#E4E0E0</color>
+    <color name="background_color">#ffffff</color>
+    <color name="chat_bubble_user">#ff9800</color>
+    <color name="particioants_bar">#EF6c00</color>
+    <color name="particioants_action_bar">#ff9800</color>
+</resources>
+
