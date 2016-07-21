@@ -28,6 +28,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sackcentury.shinebuttonlib.ShineButton;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -100,6 +102,7 @@ public class ParticipantsActivity extends AppCompatActivity
         name = mBroadCastUser.getmFirstName();
 
         mDelete = (Button) findViewById(R.id.delete_broadcast);
+        mDelete.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,7 +115,7 @@ public class ParticipantsActivity extends AppCompatActivity
                 getApplicationContext().startActivity(BroadCastActivity.newIntent(getApplicationContext()).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });
-        mDelete.setBackgroundColor(Color.RED);
+        mDelete.setBackgroundColor(Color.parseColor("#F4511E"));
 
     }
 
@@ -225,7 +228,6 @@ public class ParticipantsActivity extends AppCompatActivity
         switch(item.getItemId())
         {
             case R.id.action_settings:
-
                 startActivityForResult(pickContact, REQUEST_CONTACT);
 
                 onPause();

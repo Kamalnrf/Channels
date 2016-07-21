@@ -37,6 +37,8 @@ import android.widget.Toast;
 
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
+import com.google.common.net.MediaType;
+import com.sackcentury.shinebuttonlib.ShineButton;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,6 +53,8 @@ import a9m2broadcast.kamalnrf.broacast.model.BroadCastUser;
 import a9m2broadcast.kamalnrf.broacast.model.Brodcast;
 import a9m2broadcast.kamalnrf.broacast.model.BrodcastUserGroup;
 import a9m2broadcast.kamalnrf.broacast.util.ComandExe;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by kamalnrf on 3/7/16.
@@ -75,12 +79,22 @@ public class PostingScreenFragment extends Fragment
     private AdView adView;
     private ActionBarDrawerToggle mDrawerToggle;
     private static View view;
+    private ShineButton mShrug;
+    private ShineButton mAdd;
+    private ShineButton mClear;
+    private ShineButton mWho;
+    private ShineButton mPwb;
+    private ShineButton mHelp;
+    private TextView mInstruction;
 
     private RecyclerView mRecyclerView;
     private PostingScreenAdapter mAdapter;
 
+    LinearLayout linearLayout;
+    LinearLayout linearLayoutIn;
+
     List<String> message = new ArrayList<>();
-    List<String> user_message = new ArrayList<>();
+    List<String> user_message = new LinkedList<>();
     String temp;
 
     //fragment argument
@@ -111,28 +125,32 @@ public class PostingScreenFragment extends Fragment
 
         BroadCastLab.get(getActivity())
                 .upDateBroadCast(mBroadCast, mBroadCastGroup, mBroadCastUser);
-
-
-
         setHasOptionsMenu(true);
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
         view = inflater.inflate(R.layout.posting_screen , container, false);
 
        message.add(bot
-                + mBroadCast.toString() +
+                +
                 "\n" + mBroadCastUser.toString());
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.posting_reycler_view);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        linearLayout = (LinearLayout) view.findViewById(R.id.action_button);
+        linearLayoutIn = (LinearLayout) view.findViewById(R.id.action_button_instru);
+
+        mInstruction = (TextView) view.findViewById(R.id.instructions);
+
         mMessage = (EditText) view.findViewById(R.id.message_edit);
         mMessage.addTextChangedListener(new TextWatcher() {
+
+            List<String> backSlash = new LinkedList<String>();
 
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -142,18 +160,83 @@ public class PostingScreenFragment extends Fragment
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 temp = charSequence.toString();
-
-                if (temp.equals('/'))
-                {
-                    final Dialog dialog = new Dialog(PostingScreenFragment.this.getActivity());
-                    dialog.setTitle("Create new broad cast");
-                    dialog.setContentView(R.layout.new_broad_cast);
-                    dialog.show();
-                }
+                backSlash.add(charSequence.toString());
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
+                if (backSlash.get(0).equalsIgnoreCase("/")) {
+                    /*final Dialog dialog = new Dialog(PostingScreenFragment.this.getActivity());
+                    dialog.setContentView(R.layout.hint);
+                    dialog.setTitle("Commands");
+                    dialog.show();*/
+                }
+            }
+        });
+
+        mShrug = (ShineButton) view.findViewById(R.id.button_shrug);
+        mShrug.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMessage.setText("/shrug");
+                mInstruction.setText("Your Text");
+                linearLayout.setVisibility(View.GONE);
+                linearLayoutIn.setVisibility(View.VISIBLE);
+            }
+        });
+
+        mAdd = (ShineButton) view.findViewById(R.id.button_add);
+        mAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMessage.setText("/add");
+                mInstruction.setText("Name Country Code Phone Number");
+                linearLayout.setVisibility(View.GONE);
+                linearLayoutIn.setVisibility(View.VISIBLE);
+            }
+        });
+
+        mClear = (ShineButton) view.findViewById(R.id.button_clear);
+        mClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMessage.setText("/clear");
+                mInstruction.setText("Add nothing");
+                linearLayout.setVisibility(View.GONE);
+                linearLayoutIn.setVisibility(View.VISIBLE);
+            }
+        });
+
+        mWho = (ShineButton) view.findViewById(R.id.button_who);
+        mWho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMessage.setText("/who");
+                mInstruction.setText("If you want to know about numbers append _num (who_num)");
+                linearLayout.setVisibility(View.GONE);
+                linearLayoutIn.setVisibility(View.VISIBLE);
+            }
+        });
+
+        mPwb = (ShineButton) view.findViewById(R.id.button_pwb);
+        mPwb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMessage.setText("/pwb");
+                mInstruction.setText("This will show the present working channel.");
+                linearLayout.setVisibility(View.GONE);
+                linearLayoutIn.setVisibility(View.VISIBLE);
+            }
+        });
+
+        mHelp = (ShineButton) view.findViewById(R.id.button_help);
+        mHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMessage.setText("/help");
+                mInstruction.setText("This will list all the commands and their functionality.");
+                linearLayout.setVisibility(View.GONE);
+                linearLayoutIn.setVisibility(View.VISIBLE);
             }
         });
 
@@ -163,6 +246,12 @@ public class PostingScreenFragment extends Fragment
             public void onClick(View view) {
 
                 try {
+                    checkNotNull(temp);
+
+                    user_message.add(temp);
+
+                    linearLayout.setVisibility(View.VISIBLE);
+                    linearLayoutIn.setVisibility(View.GONE);
                     if (temp.equals("") || temp.equals(" ") || temp == null)
                     {
                         message.add(bot + "You are not allowed to send empty messages");
@@ -173,7 +262,6 @@ public class PostingScreenFragment extends Fragment
                     else {
                         isBot = false;
                         showADD = false;
-                        user_message.add(temp);
 
                         ComandExe comandExe = new ComandExe(mBroadCast, mBroadCastGroup, mBroadCastUser);
 
@@ -181,7 +269,8 @@ public class PostingScreenFragment extends Fragment
                             String helper = comandExe.comand(temp, getActivity());
                             String[] comand = comandExe.splitMessage(temp);
 
-                            message.add(bot + helper);
+                            if (!comand[0].equals("/shrug"))
+                                message.add(bot + helper);
 
                             if (helper.equals("Deleted")) {
                                 Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
@@ -202,10 +291,10 @@ public class PostingScreenFragment extends Fragment
 
                                 message.add(bot + "Your message has been sent to "
                                         + comandExe.comand("/who", getActivity()));
+
                             }
 
                         } else {
-                            //To-do shrug
 
                             for (int counter = 1; counter < mBroadCastUser.getmPhone().size(); counter++) {
                                 SmsManager smsManager = SmsManager.getDefault();
@@ -242,7 +331,6 @@ public class PostingScreenFragment extends Fragment
     private class PostingHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         private TextView mMessageTextView;
-        RelativeLayout adViewContainer;
         private TextView mUserMessageTextView;
 
         public PostingHolder(View itemView) {
@@ -278,14 +366,6 @@ public class PostingScreenFragment extends Fragment
         //binds the message
         public void bind (String message)
         {
-            if (showADD) {
-                RelativeLayout adViewContainer = (RelativeLayout) view.findViewById(R.id.adViewContainer);
-                adView = new AdView(getActivity(), "1206456892734598_1206782432702044", AdSize.BANNER_320_50);
-                adViewContainer.addView(adView);
-                adView.loadAd();
-
-                adViewContainer.setVisibility(view.VISIBLE);
-            }
             mMessageTextView.setText(message);
         }
 
@@ -333,9 +413,10 @@ public class PostingScreenFragment extends Fragment
             }
         }
 
-        private void set (List<String> message)
+        private void set (List<String> message, List<String> mUserMessage)
         {
             mMessage = message;
+            this.mUserMessage = mUserMessage;
         }
 
         @Override
@@ -356,7 +437,7 @@ public class PostingScreenFragment extends Fragment
         }
         else
         {
-            mAdapter.set(message);
+            mAdapter.set(message, user_message);
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -398,6 +479,7 @@ public class PostingScreenFragment extends Fragment
             Log.d(TAG, "Response: " + data.toString());
             uriContact = data.getData();
 
+
             mBroadCastUser.setmPhone(retrieveContactNumber());
             mBroadCastUser.setmFirstName(retrieveContactName());
 
@@ -406,6 +488,7 @@ public class PostingScreenFragment extends Fragment
 
         }
     }
+
 
     private String retrieveContactNumber() {
 

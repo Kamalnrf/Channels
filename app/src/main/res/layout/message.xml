@@ -16,6 +16,7 @@
         android:textSize="15dp"
         android:layout_gravity="left"
         tools:text="Title"
+        android:layout_margin="5dp"
         style="@style/BroadCastButton"/>
 
     <TextView
@@ -26,8 +27,8 @@
         android:padding="10dp"
         android:textSize="15dp"
         android:layout_gravity="right"
-        tools:text="Title"
         android:visibility="gone"
+        tools:text="Title"
         style="@style/chat_bubble"/>
 
 

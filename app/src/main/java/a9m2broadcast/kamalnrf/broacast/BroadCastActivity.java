@@ -15,11 +15,14 @@ import android.view.MenuItem;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.instabug.library.IBGInvocationEvent;
+import com.instabug.library.Instabug;
 
 public class BroadCastActivity extends SingleFragmentActivity
 {
     private static final String TAG = "BroadCastActivity";
     private static final String name = "Opening_screen";
+    private static final String key = "62c5a1534c9c7f60ab3472c3f04889b3";
 
     public static Intent newIntent(Context packageContext) {
         Intent i = new Intent(packageContext, BroadCastActivity.class);
@@ -37,6 +40,10 @@ public class BroadCastActivity extends SingleFragmentActivity
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(getApplication());
+
+        new Instabug.Builder(this.getApplication(), key)
+                .setInvocationEvent(IBGInvocationEvent.IBGInvocationEventShake)
+                .build();
 
     }
 

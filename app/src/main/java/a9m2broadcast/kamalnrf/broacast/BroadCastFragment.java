@@ -4,25 +4,19 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
 import com.facebook.ads.AdSize;
@@ -30,13 +24,12 @@ import com.facebook.ads.AdView;
 import com.facebook.appevents.AppEventsLogger;
 
 import java.util.List;
-import java.util.UUID;
 
 import a9m2broadcast.kamalnrf.broacast.model.BroadCastLab;
 import a9m2broadcast.kamalnrf.broacast.model.BroadCastUser;
 import a9m2broadcast.kamalnrf.broacast.model.Brodcast;
 import a9m2broadcast.kamalnrf.broacast.model.BrodcastUserGroup;
-import a9m2broadcast.kamalnrf.broacast.ui.PagerActivity;
+import a9m2broadcast.kamalnrf.broacast.ui.PostingScreenActivity;
 
 /**
  * Created by kamalnrf on 2/7/16.
@@ -75,11 +68,14 @@ public class BroadCastFragment extends Fragment {
             public void onClick(View view) {
 
                 final Dialog dialog = new Dialog(BroadCastFragment.this.getActivity());
-                dialog.setTitle("Create new broad cast");
                 dialog.setContentView(R.layout.new_broad_cast);
                 dialog.show();
 
                 final EditText title1 = (EditText) dialog.findViewById(R.id.broacast_title);
+                title1.setFilters(new InputFilter[]
+                        {
+                                new InputFilter.LengthFilter(20)
+                        });
                 title1.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -97,7 +93,7 @@ public class BroadCastFragment extends Fragment {
                     }
                 });
 
-                Button create = (Button) dialog.findViewById(R.id.button_create);
+                TextView create = (TextView) dialog.findViewById(R.id.button_create);
                 create.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -113,7 +109,7 @@ public class BroadCastFragment extends Fragment {
 
                         //BroadCastLab.get(getActivity()).addBroadCast(brodcast, brodcastUserGroup, broadCastUser);
 
-                        Intent intent = PagerActivity
+                        Intent intent = PostingScreenActivity
                                 .newIntent(getActivity(), brodcast.getmUuid());
                         startActivity(intent);
 
@@ -162,7 +158,7 @@ public class BroadCastFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            Intent intent = PagerActivity.newIntent(getActivity(), mBrodcast.getmUuid());
+            Intent intent = PostingScreenActivity.newIntent(getActivity(), mBrodcast.getmUuid());
             startActivity(intent);
 
         }

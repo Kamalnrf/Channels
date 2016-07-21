@@ -2,6 +2,8 @@ package a9m2broadcast.kamalnrf.broacast.util;
 
 import android.content.Context;
 
+import com.google.common.base.Joiner;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -33,7 +35,7 @@ public class ComandExe
 
     private String shrug = "/shrug :- appends  ¯\\_(ツ)_/¯ to the message. \n";
 
-    private String help = "/help :- This will list all the comands and their functionality. \n";
+    private String help = "/help :- This will list all the commands and their functionality. \n";
 
 
     public ComandExe(Brodcast brodcast, BrodcastUserGroup brodcastUserGroup, BroadCastUser broadCastUser)
@@ -52,26 +54,6 @@ public class ComandExe
             return true;
         else
             return false;
-    }
-
-    public static boolean isShrug (String message)
-    {
-        char[] messageChar = message.toCharArray();
-
-        for (int counter = 0; counter < messageChar.length; counter++)
-        {
-            if (messageChar[counter] == '/')
-            {
-                int temp = counter;
-
-                if (messageChar[temp] == '/' && messageChar[temp + 1] == 's' || messageChar[temp + 1] == 'S'&&
-                        messageChar[temp + 2] == 'h' && messageChar[temp + 3] == 'r'
-                        && messageChar[temp + 4] == 'u' && messageChar[temp + 5] == 'g' )
-                    return true;
-            }
-        }
-
-        return false;
     }
 
     public String[] splitMessage (String message)
@@ -137,8 +119,8 @@ public class ComandExe
                 return add(comands[1], comands[2], comands[3], context);
         }
 
-        else if (comands[0].equalsIgnoreCase("/kick"))
-            return kick(comands[1], context);
+        else if (comands[0].equalsIgnoreCase("/remove"))
+            return remove(comands[1], context);
 
         return null;
     }
@@ -153,26 +135,9 @@ public class ComandExe
     {
         List<String> name = mBroadCastUser.getmFirstName();
 
-        if (name.get(0) == null)
-            name.remove(0);
+        name.remove(0);
 
-        StringBuilder nameBuilder = new StringBuilder();
-
-        for (int counter = 0; counter < name.size(); counter++)
-        {
-            if (counter == name.size() - 1) {
-                if (name.size() >= 1)
-                    nameBuilder.append(name.get(counter));
-                else
-                nameBuilder.append(" and " + name.get(counter));
-            }
-            else if (counter == name.size() - 2)
-                nameBuilder.append(name.get(counter) + ", ");
-            else
-                nameBuilder.append(name.get(counter) + ", ");
-        }
-
-        String resultName = nameBuilder.toString();
+        String resultName = Joiner.on(", ").useForNull("Emptly list").join(name);
 
         return resultName;
     }
@@ -181,26 +146,9 @@ public class ComandExe
     {
         List<String> phone = mBroadCastUser.getmPhone();
 
-        if (phone.get(0) == null)
-            phone.remove(0);
+        phone.remove(0);
 
-        StringBuilder nameBuilder = new StringBuilder();
-
-        for (int counter = 0; counter < phone.size(); counter++)
-        {
-            if (counter == phone.size() - 1) {
-                if (phone.size() >= 1)
-                    nameBuilder.append(phone.get(counter));
-                else
-                    nameBuilder.append(" and " + phone.get(counter));
-            }
-            else if (counter == phone.size() - 2)
-                nameBuilder.append(phone.get(counter) + ", ");
-            else
-                nameBuilder.append(phone.get(counter) + ", ");
-        }
-
-        String resultName = nameBuilder.toString();
+        String resultName = Joiner.on(", ").useForNull("Empty number").join(phone);
 
         return resultName;
     }
@@ -231,7 +179,7 @@ public class ComandExe
     }
 
     //Separating message and command
-    public String kick (String name, Context context)
+    public String remove (String name, Context context)
     {
         List<String> nameCon = mBroadCastUser.getmFirstName();
         for (int counter = 1; counter < mBroadCastUser.getmPhone().size(); counter++)

@@ -337,7 +337,7 @@ public class BroadCastLab
         ContentValues values2 = getUserValues(broadCastUser, brodcastUserGroup);
 
         try{
-            mDatabase.delete(User.NAME, "first_name = ?", new String[] {
+            mDatabase.delete(User.NAME, "first_name=?", new String[] {
                     name
             });
 
