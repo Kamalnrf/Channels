@@ -22,7 +22,6 @@ public class Brodcast
 
 
     public String getmTitle() {
-
         return mTitle;
     }
 
