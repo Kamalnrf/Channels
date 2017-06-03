@@ -136,7 +136,7 @@ public class BroadCastFragment extends Fragment {
         return view;
     }
 
-    //Inner class for holder to hold the views
+    //Inner class for view holder
     private class BroadCastHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private Brodcast mBrodcast;
         private TextView mTitleTextView;

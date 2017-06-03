@@ -1,7 +1,5 @@
 package a9m2broadcast.kamalnrf.broacast.model;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -27,6 +25,7 @@ public class Brodcast
 
         return mTitle;
     }
+
 
     public UUID getmUuid() {
 

@@ -13,7 +13,7 @@ public class BroadCastUser
     private UUID mUuid;
     List<String> mFirstName;
     List<String> mPhone;
-
+    List<String> mEmailIDs;
     Map<String, String> mNum = new HashMap<>();
 
     public void setmUuid(UUID mUuid) {
@@ -28,9 +28,10 @@ public class BroadCastUser
     public void refreshHashMap ()
     {
         for (int counter = 1; counter < mFirstName.size(); counter++)
-            mNum.put(mFirstName.get(counter), mFirstName.get(counter));
+            mNum.put(mFirstName.get(counter), mNum.get(counter));
     }
 
+    //---GETTERS---
     public Map<String, String> getmNum() {
         return mNum;
     }
@@ -49,6 +50,11 @@ public class BroadCastUser
         return mPhone.get(positon);
     }
 
+
+    public String getEmailIDs (int position){
+        return mEmailIDs.get(position);
+    }
+
     public UUID getmUuid() {
         return mUuid;
     }
@@ -58,10 +64,18 @@ public class BroadCastUser
         return mPhone;
     }
 
-    public void removeContact (int counter)
-    {
-        mFirstName.remove(counter);
-        mPhone.remove(counter);
+    public List<String> getmEmailIDs() {
+        return mEmailIDs;
+    }
+
+    //--Setters--
+
+    public void setmEmailIDs (String emailID){
+        this.mEmailIDs.add(emailID);
+    }
+
+    public void setmEmailIDs (List<String> emailID){
+        this.mEmailIDs = emailID;
     }
 
     public void setmPhone(String phoneNo) {
@@ -84,6 +98,12 @@ public class BroadCastUser
 
     public void setmPhone(List<String> mPhone) {
         this.mPhone = mPhone;
+    }
+
+    public void removeContact (int id) {
+        mFirstName.remove(id);
+        mPhone.remove(id);
+        mNum.remove(id);
     }
 
     @Override

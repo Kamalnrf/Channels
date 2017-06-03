@@ -34,6 +34,7 @@ public class PostingScreenActivity extends SingleFragmentActivity
         UUID channelId = (UUID) getIntent().getSerializableExtra(EXTRA_ID);
 
         mBroadCast = BroadCastLab.get(this).getBroadcasts(channelId);
+        //Sets the title on top of the screen
         setTitle(mBroadCast.getmTitle());
 
         return PostingScreenFragment.newInstance(channelId);

@@ -32,6 +32,9 @@ public class BroadCastBaseHelper extends SQLiteOpenHelper
                 " _id integer primary key autoincrement, " +
                 UserGroup.Cols.GROUPID + ", " +
                 UserGroup.Cols.USERID + ", " +
+                UserGroup.Cols.FB + "," +
+                UserGroup.Cols.GMAIL + "," +
+                UserGroup.Cols.TWITTER + ","+
                 User.Cols.UUID + ")"
         );
 
@@ -39,6 +42,7 @@ public class BroadCastBaseHelper extends SQLiteOpenHelper
                 " _id integer primary key autoincrement, " +
                 User.Cols.FIRSTNAME + ", " +
                 User.Cols.PHONENO + ", " +
+                User.Cols.EMAILID + ", " +
                 User.Cols.UUID + ")"
         );
 

@@ -25,6 +25,9 @@ public class BroadCastDBSchema
             public static final String UUID = "uuid";
             public static final String GROUPID = "group_id";
             public static final String USERID = "user_id";
+            public static final String TWITTER = "twitter";
+            public static final String FB = "facebook";
+            public static final String GMAIL = "gmail";
         }
     }
 
@@ -37,6 +40,7 @@ public class BroadCastDBSchema
             public static final String UUID = "uuid";
             public static final String FIRSTNAME = "first_name";
             public static final String PHONENO = "phone_no";
+            public static final String EMAILID = "email_id";
         }
     }
 }

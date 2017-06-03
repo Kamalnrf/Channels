@@ -63,6 +63,9 @@ public class BroadCastLab
         values.put(UserGroup.Cols.UUID, UUID.randomUUID().toString());
         values.put(UserGroup.Cols.GROUPID, brodcast.getmUuid().toString());
         values.put(UserGroup.Cols.USERID, brodcast.getmUuid().toString());
+        values.put(UserGroup.Cols.FB, brodcastUserGroup.getmFb().toString());
+        values.put(UserGroup.Cols.GMAIL, brodcastUserGroup.getmGmail().toString());
+        values.put(UserGroup.Cols.TWITTER, brodcastUserGroup.getmTwitter().toString());
 
         return values;
     }
@@ -83,6 +86,11 @@ public class BroadCastLab
                 for (int counter = 0; counter < broadCastUser.getmPhone().size(); counter++) {
                     values.put(User.Cols.PHONENO, broadCastUser.getmPhone().get(counter));
                 }
+
+                for (int counter = 0; counter < broadCastUser.getmEmailIDs().size(); counter++) {
+                    values.put(User.Cols.EMAILID, broadCastUser.getmEmailIDs().get(counter));
+                }
+
             }
         }
         catch (Exception e)
@@ -95,7 +103,7 @@ public class BroadCastLab
         return values;
     }
 
-    //Retrives the broadcast groups.
+    //Retrieve the broadcast groups.
     public List<Brodcast> getBroadcasts()
     {
         List<Brodcast> brodcasts = new ArrayList<>();
@@ -120,7 +128,7 @@ public class BroadCastLab
         return brodcasts;
     }
 
-    //Retrives the broadcast groups.
+    //Retrieve the broadcast groups.
     public Brodcast getBroadcasts(UUID id)
     {
         BroadCastCursorWrapper cursor = queryGroups(Group.NAME
@@ -148,6 +156,7 @@ public class BroadCastLab
         }
     }
 
+    // Retrieve specific group details
     public BrodcastUserGroup getBrodcastUserGroup (UUID id)
     {
         BroadCastCursorWrapper cursor = queryGroups(UserGroup.NAME
@@ -175,6 +184,7 @@ public class BroadCastLab
         }
     }
 
+    //Retrieve specific user details
     public BroadCastUser getBrodcastUser (UUID id)
     {
         BroadCastCursorWrapper cursor = queryGroups(User.NAME
@@ -312,6 +322,7 @@ public class BroadCastLab
         }
     }
 
+    //Add user
     public void addUser (Brodcast brodcast, BrodcastUserGroup brodcastUserGroup, BroadCastUser broadCastUser)
     {
         ContentValues values = getGroupValues(brodcast);
@@ -329,6 +340,7 @@ public class BroadCastLab
         }
     }
 
+    //Delete a specific user
     public void deleteUser (Brodcast brodcast, BrodcastUserGroup brodcastUserGroup, BroadCastUser broadCastUser
     , String name)
     {

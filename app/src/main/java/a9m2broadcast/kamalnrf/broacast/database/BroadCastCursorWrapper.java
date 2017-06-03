@@ -6,19 +6,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 
 import a9m2broadcast.kamalnrf.broacast.database.BroadCastDBSchema.Group;
 import a9m2broadcast.kamalnrf.broacast.database.BroadCastDBSchema.UserGroup;
-import a9m2broadcast.kamalnrf.broacast.model.BroadCastLab;
 import a9m2broadcast.kamalnrf.broacast.model.BroadCastUser;
 import a9m2broadcast.kamalnrf.broacast.model.Brodcast;
 import a9m2broadcast.kamalnrf.broacast.model.BrodcastUserGroup;
 
-import static a9m2broadcast.kamalnrf.broacast.database.BroadCastDBSchema.*;
+import static a9m2broadcast.kamalnrf.broacast.database.BroadCastDBSchema.User;
 
 /**
  * Created by kamalnrf on 2/7/16.
@@ -48,11 +45,17 @@ public class BroadCastCursorWrapper extends CursorWrapper
         String uuid = getString(getColumnIndex(UserGroup.Cols.UUID));
         String groupID = getString(getColumnIndex(UserGroup.Cols.GROUPID));
         String userID = getString(getColumnIndex(UserGroup.Cols.USERID));
+        String twitter = getString(getColumnIndex(UserGroup.Cols.TWITTER));
+        String gmail = getString(getColumnIndex(UserGroup.Cols.GMAIL));
+        String fb = getString(getColumnIndex(UserGroup.Cols.FB));
 
         BrodcastUserGroup brodcastUserGroup = new BrodcastUserGroup(UUID.fromString(uuid));
 
         brodcastUserGroup.setmGroupID(UUID.fromString(groupID));
         brodcastUserGroup.setmUserID(UUID.fromString(userID));
+        brodcastUserGroup.setmFb(fb.equals("true"));
+        brodcastUserGroup.setmGmail(gmail.equals("true"));
+        brodcastUserGroup.setmTwitter(twitter.equals("true"));
 
         return brodcastUserGroup;
     }
@@ -62,6 +65,7 @@ public class BroadCastCursorWrapper extends CursorWrapper
         List<String> firstName = new ArrayList<>();
         List<String> lastName = new ArrayList<>();
         List<String> phoneNo = new ArrayList<>();
+        List<String> emailIDs = new ArrayList<>();
 
         String uuerID = getString(getColumnIndex(User.Cols.UUID));
 
@@ -69,7 +73,7 @@ public class BroadCastCursorWrapper extends CursorWrapper
             while (!cursor.isAfterLast()) {
                 firstName.add(getString(getColumnIndex(User.Cols.FIRSTNAME)));
                 phoneNo.add(getString(getColumnIndex(User.Cols.PHONENO)));
-
+                emailIDs.add(getString(getColumnIndex(User.Cols.EMAILID)));
                 cursor.moveToNext();
             }
         }
@@ -82,6 +86,7 @@ public class BroadCastCursorWrapper extends CursorWrapper
         broadCastUser.setmUuid(UUID.fromString(uuerID));
         broadCastUser.setmFirstName(firstName);
         broadCastUser.setmPhone(phoneNo);
+        broadCastUser.setmEmailIDs(emailIDs);
 
         return broadCastUser;
     }
